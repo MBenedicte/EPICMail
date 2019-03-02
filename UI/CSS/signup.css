@@ -1,0 +1,129 @@
+:root{
+    --main-text-color: #202020;
+    --main-color: #7404f3;
+    --second-color:#e033d2;
+    --third-color:#f58888;
+    --background-color:#ffffff; 
+    --border-color:#d1cece;
+    --shadow-color:#999999;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.container{
+    padding: 3%;
+    width: 60%;
+    height: 100%;
+    border: 1px var(--border-color) solid;
+    /* border: 1px var(--main-color) solid; */
+    border-radius:5px;
+    overflow: hidden; 
+    margin: 5% auto;
+    box-shadow: 5px 5px 4.2px var(--shadow-color);
+
+}
+.users-pro{
+    width: 60%;
+    float: left;
+}
+.title{
+    font-size: 24px;
+    color: var(--main-text-color);
+}
+.names, .uname, .other-address, .passwords{
+    overflow: hidden;
+    padding-bottom: 3%;
+}
+ input{
+    border: 1px var(--background-color) solid;
+    color: var(--main-text-color);
+}
+textarea:focus, input:focus{
+    outline: none;
+}
+.names fieldset {
+    width: 23%;
+    border: 2px var(--border-color) solid;
+    border-radius: 5px;
+    float: left;
+    
+}
+legend{
+    color: var(--main-color);
+}
+
+.uname fieldset{
+    width: 85%;
+    border: 2px var(--border-color) solid;
+    border-radius: 5px;
+    
+}
+.names fieldset:hover,.names fieldset:focus, .uname fieldset:hover, .uname fieldset:focus, .other-address fieldset:hover,.other-address fieldset:focus, .passwords fieldset:hover,.passwords fieldset:focus{
+    border: 2px var(--main-color) solid;
+}
+.uname-text{
+    font-size: 12px; 
+}
+
+.other-address fieldset {
+    width: 23%;
+    border: 2px var(--border-color) solid;
+    border-radius: 5px;
+    float: left;
+    
+}
+.bday{
+    margin-left: 25px;
+}
+.passwords fieldset {
+    width: 23%;
+    border: 2px var(--border-color) solid;
+    border-radius: 5px;
+    float: left;   
+}
+
+.next a{
+    text-decoration: none;
+    width: 92%;
+    padding: 15px 0px;
+    display: block;
+    text-align: center;
+    color: var(--background-color);
+    border-radius: 5px;
+    font-weight: bold;
+    background-image: linear-gradient(-45deg, var(--main-color), var(--second-color)); 
+}
+.next a:hover,.next a:focus{
+    background-image: linear-gradient(-45deg, var(--second-color), var(--third-color)); 
+}
+.signin a{
+    text-decoration: none;
+    width: 91%;
+    padding: 15px 0px;
+    display: block;
+    text-align: center;
+    color: var(--main-color);
+    border-radius: 5px;
+    border: var(--border-color) 1px solid;
+    margin: 2% 0%;
+} 
+.signin a:hover,.signin a:focus{
+    background-image: linear-gradient(-45deg,var(--second-color), var(--third-color)); 
+    color:var(--background-color);
+}
+.image {
+    float:right;
+    width: 40%;
+    margin: 10% 0%
+}
+.image img{
+    width: 80%;
+}
+.text-2{
+    margin: 0% 0% 3% 0%;
+    font-size: 22px;
+    font-weight: bolder;
+    text-align: center;
+    color:var(--main-text-color);
+}
