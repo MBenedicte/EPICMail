@@ -25,8 +25,7 @@ export default class Emails{
     }
     static emailById(req,res){
         const email=receivedmails.find(item=>item.id===parseInt(req.params.id));
-
-        if(!email)res.send({
+        if(!email) return res.send({
             status: 404,
             message:'Email with the given id does not exist'
         })
@@ -35,5 +34,23 @@ export default class Emails{
             status:200,
             data: email
         })
+    }
+    static deleteEmail(req,res){
+        const email= receivedmails.find(item=>item.id=== parseInt(req.params.id));
+        if(!email) return res.send({
+            status: 404,
+            message:'Email with the given id does not exist'
+        })
+
+        const index=receivedmails.indexOf(email);
+        receivedmails.splice(index,1);
+
+        res.send({
+            status: 200,
+            data: email.message,
+            message:'The email was deleted'
+        })
+
+
     }
 }
