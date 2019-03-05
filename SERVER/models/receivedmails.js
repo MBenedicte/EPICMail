@@ -6,7 +6,7 @@ const receivedMails=[{
     senderId: 2,
     receiverId:2,
     parentMessageId:2,
-    status: "not read"
+    status: "received"
     },{
         id:2,
     createOn:"03/02/2019",
@@ -15,7 +15,7 @@ const receivedMails=[{
     senderId: 3,
     receiverId:2,
     parentMessageId:3,
-    status: "not read"
+    status: "received"
     },{
         id:3,
     createOn:"02/02/2019",
@@ -24,7 +24,7 @@ const receivedMails=[{
     senderId: 3,
     receiverId:2,
     parentMessageId:3,
-    status: "not read"
+    status: "received"
     }
 ]
 
