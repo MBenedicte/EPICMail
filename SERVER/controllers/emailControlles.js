@@ -23,4 +23,17 @@ export default class Emails{
             data: sentMails
         });
     }
+    static emailById(req,res){
+        const email=receivedmails.find(item=>item.id===parseInt(req.params.id));
+
+        if(!email)res.send({
+            status: 404,
+            message:'Email with the given id does not exist'
+        })
+
+        res.send({
+            status:200,
+            data: email
+        })
+    }
 }
