@@ -4,5 +4,6 @@ const routers= Router();
 
 routers.get('/messages', Mails.allReceivedMail);
 routers.get('/messages/unread', Mails.unreadMail)
+routers.get('/messages/sent',Mails.sentMail)
 
 export default routers;

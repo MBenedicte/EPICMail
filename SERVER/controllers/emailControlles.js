@@ -1,5 +1,6 @@
 import receivedmails from '../models/receivedmails';
 import unreadMails from '../models/unreadMails'
+import sentMails from '../models/sentMails';
 
 
 export default class Emails{
@@ -13,6 +14,13 @@ export default class Emails{
         res.send({
             status: 200,
             data: unreadMails
+        });
+    }
+
+    static sentMail(req,res){
+        res.send({
+            status: 200,
+            data: sentMails
         });
     }
 }
