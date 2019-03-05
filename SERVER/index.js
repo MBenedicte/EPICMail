@@ -1,4 +1,5 @@
 import express from "express";
+import { Router } from "express"
 const app=express();
 
 app.get('/',(req,res)=>{
