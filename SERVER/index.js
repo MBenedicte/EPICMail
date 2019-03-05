@@ -1,10 +1,12 @@
-import express from "express";
-import { Router } from "express"
-const app=express();
+import express from 'express';
+import allRoutes from './routes'
 
-app.get('/',(req,res)=>{
-    res.send('hello world /javascript');
-})
+const app=express();
+app.use(express.json())
+
+app.use('/api/v1/', allRoutes);
 
 const port=process.env.PORT||8000;
 app.listen(port, ()=>console.log(`The server is listening on port ${port}`));
+
+
