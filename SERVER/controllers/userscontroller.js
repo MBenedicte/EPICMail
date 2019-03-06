@@ -1,4 +1,5 @@
 import users from '../models/users';
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt';
 
 
@@ -39,7 +40,6 @@ import bcrypt from 'bcrypt';
        })
     }
 }
-
 
 
 export default User;
