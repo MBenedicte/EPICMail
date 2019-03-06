@@ -51,6 +51,5 @@ export default class Emails{
             message:'The email was deleted'
         })
 
-
     }
 }
