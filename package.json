@@ -24,7 +24,7 @@
   },
   "scripts": {
     "test": " nyc --require babel-core/register mocha ./SERVER/test/*.test.js --timeout 15000 --exit",
-    "start": " nodemon --exec babel-node SERVER/index.js",
+    "start": "babel-node SERVER/index.js",
     "dev": "SET NODE_ENV=development && nodemon --exec babel-node SERVER/index.js",
     "coveralls": "npm test  && nyc report --reporter=text-lcov | coveralls"
   },
