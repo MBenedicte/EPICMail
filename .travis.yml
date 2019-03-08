@@ -1,8 +1,14 @@
 sudo: false
 
+env:
+  global:
+    - NODE_ENV=test
 language: node_js
 
 node_js:
-  - node
-
-script:
+  - "8.12.0"
+script: npm test
+after_success:
+  - npm run coveralls
+notifications:
+  email: false
