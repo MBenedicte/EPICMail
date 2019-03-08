@@ -1,7 +1,9 @@
 import users from '../models/users';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import config from 'config';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 export default class User{
@@ -30,7 +32,7 @@ export default class User{
         
         // const token= jwt.sign({id: user.id},'jwtPrivatekey')
 
-        const token= jwt.sign({id: user.id},config.get('jwtPrivatekey'))
+        const token= jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
 
         users.push(user);
 
