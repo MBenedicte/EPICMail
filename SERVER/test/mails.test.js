@@ -86,7 +86,7 @@ describe('5. /Delete an email',()=>{
          .send(received.message)
          .end((err,res)=>{
             should.not.exist(err);
-            //res.should.have.status(200);
+            res.should.have.status(404);
             res.body.should.be.a('object');
             
             done();
