@@ -35,7 +35,11 @@ export default class Emails{
             data: email
         })
     }
-    static deleteEmail(req,res){
+
+     static deleteEmail(req,res){
+
+        // console.log(receivedmails);
+
         const email= receivedmails.find(item=>item.id=== parseInt(req.params.id));
         if(!email) return res.send({
             status: 404,
@@ -44,6 +48,7 @@ export default class Emails{
 
         const index=receivedmails.indexOf(email);
         receivedmails.splice(index,1);
+
 
         res.send({
             status: 200,

@@ -93,3 +93,27 @@ describe('5. /Delete an email',()=>{
          })
    })
 })
+
+describe('6. /Regiter a user ', () => {
+   it('it should register a new user', (done) => {
+       let user = {
+           title: "The Lord of the Rings",
+           author: "J.R.R. Tolkien",
+           year: 1954
+       }
+     chai.request(server)
+         .post('/api/auth/signup')
+         .send(user)
+         .end((err, res) => {
+               //res.should.have.status(200);
+               
+               res.body.should.be.a('object');
+               // res.body.should.have.property('token');
+               // res.body.errors.should.have.property('pages');
+               // res.body.errors.pages.should.have.property('kind').eql('required');
+           done();
+         })
+      })
+      
+   })      
+         
