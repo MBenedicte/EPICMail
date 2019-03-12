@@ -5,7 +5,6 @@ App logo
 
 
 [![Build Status](https://travis-ci.org/MBenedicte/EPICMail.svg?branch=develop)](https://travis-ci.org/MBenedicte/EPICMail)
-
 [![Coverage Status](https://coveralls.io/repos/github/MBenedicte/EPICMail/badge.svg?branch=develop)](https://coveralls.io/github/MBenedicte/EPICMail?branch=develop)
 
 ![EPIC MAIL](UI/IMAGES/Epic_mail_landingp.png)
@@ -76,6 +75,6 @@ Get: /api/v1/users
 
 npm run server
 
-# 5 . Author:
+# 6 . Author:
 
 Benedicte Musabimana
