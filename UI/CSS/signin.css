@@ -81,18 +81,13 @@ legend{
 .next a:hover,.next a:focus{
     background-image: linear-gradient(-45deg, var(--second-color), var(--third-color)); 
 }
-.signup a{
-    text-decoration: none;
-    width: 85%;
-    margin: 2% auto;
-    padding: 15px 0px;
-    display: block;
-    text-align: center;
+
+.signup a, .resetpwd a{ 
+    float: left;
+    margin-left: 49px;
     color: var(--main-color);
-    border-radius: 5px;
-    border: var(--border-color) 1px solid;
-} 
-.signup a:hover,.signup a:focus{
-    background-image: linear-gradient(-45deg,var(--second-color), var(--third-color)); 
-    color:var(--background-color);
+}
+
+.signup a:hover, .resetpwd a:hover{
+    color: var(--second-color);
 }
