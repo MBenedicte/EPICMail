@@ -149,10 +149,21 @@ body{
 .sender-name{
     font-weight:bolder;
     padding: 15px 5px 5px 5px;
+    float: left;
+    width: 80%;
 }
 .sender-message{
     font-style: italic;
     font-size: 15px;
+    width: 80%;
+}
+.delete-icon img{
+    float: right;  
+    margin: 3%; 
+    width: 2%;
 }
 
-
+.delete-icon img:hover, .delete-icon img:focus{
+    width: 2.8%;
+    margin: 2.6%
+}
