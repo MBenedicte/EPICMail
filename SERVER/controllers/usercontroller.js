@@ -61,7 +61,7 @@ export default class User{
             message:"Invalid username or password"
         })
 
-        // const token= jwt.sign({id: user.id},'jwtPrivatekey')
+        
         const token= jwt.sign({id: user.id},config.get('jwtPrivatekey'))
         res.send({
             status: 200,
