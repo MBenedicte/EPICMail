@@ -1,9 +1,6 @@
 import users from '../models/users';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 
 export default class User{
@@ -13,10 +10,10 @@ export default class User{
 
     static async userSignup(req,res){
         let user= users.find(item=>item.username === req.body.username);
-        if(user) return res.send({
+        if(user) return res.status(400).send({
             status: 400,
             message:"Users already exists"
-        })
+        });
 
         user={
             id: users.length+1,
@@ -30,14 +27,13 @@ export default class User{
         const salt = await bcrypt.genSalt(10);
         user.password= await bcrypt.hash(user.password,salt);
         
-        // const token= jwt.sign({id: user.id},'jwtPrivatekey')
-
         const token= jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
 
         users.push(user);
 
         res.send({
             status: 200,
+            message:"User registered successfully",
             data:[{
                 'token':token
             }]
@@ -61,10 +57,10 @@ export default class User{
             message:"Invalid username or password"
         })
 
-        // const token= jwt.sign({id: user.id},'jwtPrivatekey')
         const token= jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
         res.send({
             status: 200,
+            message: "User signed in successfully",
             data:[{
                 'token':token
             }]
