@@ -62,7 +62,7 @@ export default class User{
         })
 
         // const token= jwt.sign({id: user.id},'jwtPrivatekey')
-        const token= jwt.sign({id: user.id},config.get('jwtPrivatekey'))
+        const token= jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
         res.send({
             status: 200,
             data:[{
