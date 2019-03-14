@@ -4,7 +4,7 @@ const receivedMails=[{
     subject:"challenge 1 submission",
     message:"Challenge 1 submission",
     senderId: 2,
-    receiverId:2,
+    receiverId:3,
     parentMessageId:2,
     status: "received"
     },{
