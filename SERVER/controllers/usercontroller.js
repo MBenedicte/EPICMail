@@ -4,11 +4,12 @@ import jwt from 'jsonwebtoken';
 import validateNewUser from '../Helper/validation'
 
 
+
 export default class User{
     static getAllUsers(req,res){
         res.status(200).send({
           status: 200,
-          message:"All users",
+          message:"Users fetched successfully",
           data:{
             users
           }

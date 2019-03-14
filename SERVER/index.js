@@ -1,7 +1,9 @@
 import express from 'express';
 import allRoutes from './routes';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 if (!process.env.JWTPRIVATEKEY){
     console.error('FATAL ERROR: jwt is not defined');
@@ -14,10 +16,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
+//app.use(express.json())
 
 app.use('/api/v1/', allRoutes);
 
-const port=process.env.PORT||8000;
+const port=process.env.PORT||3030;
 const server=app.listen(port, ()=>console.log(`The server is listening on port ${port}`));
 
 module.exports = server
