@@ -7,6 +7,7 @@ routers.get('/messages/received/:id', Mails.allReceivedMail);
 routers.get('/messages/unread/:id', Mails.unreadMail)
 routers.get('/messages/sent/:id',Mails.sentMail)
 routers.get('/messages/:id',Mails.emailById);
+routers.post('/messages/send', Mails.sendMail);
 routers.delete('/messages/:id',Mails.deleteEmail);
 
 export default routers;

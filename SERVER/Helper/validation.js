@@ -142,6 +142,78 @@ export default class Validate{
           };
     
           return Joi.validate(user,schema)
-        
+    }
+
+    static validateMail(mail) {
+      const schema = {
+        receiverId: Joi.number.positive().required().error( ( errors) => {
+          return errors.forEach( err => {
+            switch(err.type) {
+              case "any.empty": 
+                err.message = `receiverId should not be empty`;
+                break;
+              case "number.positive":
+                err.message = `receiverId should be positive numberic value`;
+                break;
+            }
+          })
+        }),
+        senderId: Joi.number.positive().required().error( ( errors) =>
+          errors.forEach( err => {
+            switch(err.type) {
+              case "any.empty": 
+                err.message = `receiverId should not be empty`;
+                break;
+              case "number.positive":
+                err.message = `receiverId should be positive numberic value`;
+                break;
+              default: 
+                break;
+            }
+          })
+        ),
+        subject: Joi.string().min(5).max(30).required().trim().error( (errors) => 
+          errors.forEach( err => {
+              switch (err.type) {
+                case "any.empty":
+                  err.message = `subject should not be empty!`;
+                  break;
+                case "string.min":
+                  err.message = `subject should have at least ${err.context.limit} characters!`;
+                  break;
+                case "string.max":
+                  err.message = `subject should have at most ${err.context.limit} characters!`;
+                  break;
+                case "string.trim":
+                  err.message = `subject should not have empty space after or before`;
+                  break;
+                default:
+                  break;
+              }
+          })
+        ),
+        message: Joi.string().min(5).max(30).required().trim().error( (errors) => 
+          errors.forEach( err => {
+              switch (err.type) {
+                case "any.empty":
+                  err.message = `message should not be empty!`;
+                  break;
+                case "string.min":
+                  err.message = `message should have at least ${err.context.limit} characters!`;
+                  break;
+                case "string.max":
+                  err.message = `message should have at most ${err.context.limit} characters!`;
+                  break;
+                case "string.trim":
+                  err.message = `message should not have empty space after or before`;
+                  break;
+                default:
+                  break;
+              }
+          })
+        )
+      }
+
+      return Joi.validate(mail, schema);
     }
 }

@@ -4,6 +4,7 @@
 import allmails from '../models/Mails';
 import allusers from '../models/users'
 import filtered from '../Helper/filter';
+import validator from '../Helper/validation'
 
 
 export default class Emails{
@@ -12,6 +13,35 @@ export default class Emails{
             status: 200,
             data:allmails    
         });
+    }
+
+    static sendMail(req, res) {
+        const { error }= validator.validateMail(req.body);
+        if(error){
+            return res.status(400).send({
+                status: 400,
+                message: error.details[0].message
+            })
+        }
+        
+        const newMail = {
+            id: allmails.length,
+            senderId: req.body.senderId,
+            receiverId: req.body.receiverId,
+            subject: req.body.subject,
+            message: req.body.message,
+            createOn: new Date().toLocaleTimeString(),
+            parentMessageId: undefined
+        };
+
+        allmails.push(newMail);
+
+        return res.status(200).send({
+            status: 200,
+            message:"Email sent successfully",
+            data: newMail
+        })
+
     }
     static allReceivedMail(req,res){
 
