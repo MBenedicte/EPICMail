@@ -149,10 +149,17 @@ body{
 .sender-name{
     font-weight:bolder;
     padding: 15px 5px 5px 5px;
+    float: left;
+    width: 80%;
 }
 .sender-message{
     font-style: italic;
     font-size: 15px;
+    width: 80%;
+}
+.time{
+    float: right;  
+    margin: 3%;
 }
 
 
