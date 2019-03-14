@@ -6,21 +6,27 @@ import validateNewUser from '../Helper/validation'
 
 export default class User{
     static getAllUsers(req,res){
-        res.send(users);
+        res.status(200).send({
+          status: 200,
+          message:"All users",
+          data:{
+            users
+          }
+        });
     }
 
     static async userSignup(req,res){
 
-        let usere= users.find(item => item.username === req.body.username);
-        if(usere)
+        let user= users.find(item => item.username === req.body.username);
+        if(user)
          {
             return res.status(400).send({
                 status: 400,
-                message:"Users already exists"
+                message:"User already exists"
             });
     
          }
-        let user ={
+        user ={
             id: users.length+1,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
@@ -31,7 +37,10 @@ export default class User{
 
         const { error }= validateNewUser.validateReistration(req.body)
         if( error ){
-            res.status(400).send(error.details[0].message)
+            res.status(400).send({
+              status: 400,
+              message: error.details[0].message
+            })
             return;
         }
 
@@ -56,26 +65,28 @@ export default class User{
 
         const { error }= validateNewUser.validateLogin(req.body)
         if( error ){
-            res.status(400).send(error.details[0].message)
+            res.status(400).send({
+              status: 400,
+              message: error.details[0].message
+            })
            return;
         }
 
         let user= users.find(item=>item.username === req.body.username);
+        
         if(!user) return res.status(400).send({
             status: 400,
             message:"Invalid username or password"
         })
-
-        user={
-            username: req.body.username,
-            password: req.body.password
-        }
-
-        const validPassword= bcrypt.compare(req.body.password, user.password);
+        const validPassword= await  bcrypt.compare(req.body.password, user.password);
         if(!validPassword) return res.status(400).send({
             status: 400,
             message:"Invalid username or password"
         })
+        user={
+            username: req.body.username,
+            password: req.body.password
+        }
 
         const token= jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
         res.status(200).send({

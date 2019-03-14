@@ -6,9 +6,6 @@ import unreadmails from '../models/unreadMails'
 import sentmails from '../models/sentMails'
 
 
-
-
-
 const should = chai.should();
 chai.use(chaiHttp);
 
@@ -95,7 +92,7 @@ describe('5. /Delete an email',()=>{
 })
 
 describe('6. /Regiter a user ', () => {
-   it('it should register a new user', (done) => {
+   it('it should register a new user ', (done) => {
        let user = {
            title: "The Lord of the Rings",
            author: "J.R.R. Tolkien",
@@ -115,5 +112,16 @@ describe('6. /Regiter a user ', () => {
          })
       })
       
-   })      
+   
+   it("should throw error on invalid username", () => {
+      chai
+         res.should.have.status(400);
+      
+   });
+
+   it("should throw user already existed in user id exists", () => {
+      res.should.have.status(400);
+      res.body.should.have
+   })
+})      
          
