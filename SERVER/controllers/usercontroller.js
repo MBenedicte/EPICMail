@@ -17,8 +17,15 @@ export default class User{
     }
 
     static async userSignup(req,res){
+        const { error } = validateNewUser.validateReistration(req.body)
+        if( error ){
+            return res.status(400).send({
+              status: 400,
+              message: error.details[0].message
+            });
+        }
 
-        let user= users.find(item => item.username === req.body.username);
+        let user = users.find(item => item.username === req.body.username);
         if(user)
          {
             return res.status(400).send({
@@ -27,34 +34,25 @@ export default class User{
             });
     
          }
-        user ={
+
+        user = {
             id: users.length+1,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             email: req.body.email,
             username: req.body.username,
             password: req.body.password
-        }       
-
-        const { error }= validateNewUser.validateReistration(req.body)
-        if( error ){
-            res.status(400).send({
-              status: 400,
-              message: error.details[0].message
-            })
-            return;
-        }
-
+        }    
 
         const salt = await bcrypt.genSalt(10);
-        user.password= await bcrypt.hash(user.password,salt);
+        user.password = await bcrypt.hash(user.password,salt);
         
-        const token= jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
+        const token = jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
 
         users.push(user);
 
-        res.status(200).send({
-            status: 200,
+        return res.status(201).send({
+            status: 201,
             message:"User registered successfully",
             data:[{
                 'token':token
@@ -75,13 +73,13 @@ export default class User{
 
         let user= users.find(item=>item.username === req.body.username);
         
-        if(!user) return res.status(400).send({
-            status: 400,
+        if(!user) return res.status(404).send({
+            status: 404,
             message:"Invalid username or password"
         })
         const validPassword= await  bcrypt.compare(req.body.password, user.password);
      
-        if(!validPassword) return res.send({
+        if(!validPassword) return res.status(404).send({
             status: 400,
             message:"Invalid username or password"
         })

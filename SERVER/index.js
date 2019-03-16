@@ -3,6 +3,13 @@ import allRoutes from './routes';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
+// import swaggerUi from 'swagger-ui-express';
+// import swaggerDocument from './swagger.json';
+
+// const swaggerRouter = Router();
+// swaggerRouter.use('/swagger', swaggerUi.serve);
+// swaggerRouter.get('/swagger', swaggerUi.setup(swaggerDocument));
+
 dotenv.config();
 
 if (!process.env.JWTPRIVATEKEY){
