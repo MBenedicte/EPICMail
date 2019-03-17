@@ -1,9 +1,7 @@
-// import receivedmails from '../models/receivedmails';
-//import unreadMails from '../models/unreadMails'
-// import sentMails from '../models/sentMails';
 import allmails from '../models/Mails';
 import allusers from '../models/users'
 import filtered from '../Helper/filter';
+import validator from '../Helper/validation'
 
 
 export default class Emails{
@@ -13,8 +11,36 @@ export default class Emails{
             data:allmails    
         });
     }
-    static allReceivedMail(req,res){
 
+    static sendMail(req, res) {
+        // const { error }= validator.validateMail(req.body);
+        // if(error){
+        //     return res.status(400).send({
+        //         status: 400,
+        //         message: error.details[0].message
+        //     })
+        // }
+        
+        const newMail = {
+            id: allmails.length,
+            senderId: req.body.senderId,
+            receiverId: req.body.receiverId,
+            subject: req.body.subject,
+            message: req.body.message,
+            createOn: req.body.createOn,
+            parentMessageId: req.body.parentMessageId
+        };
+
+        allmails.push(newMail);
+
+        return res.status(200).send({
+            status: 200,
+            message:"Email sent successfully",
+            data: newMail
+        })
+
+    }
+    static allReceivedMail(req,res){
         const allReceivedMails=filtered.filteredArray(allmails,"status","received");
         const user = allusers.find(item=>item.id===parseInt(req.params.id));
         if(!user) return res.send({
@@ -23,11 +49,11 @@ export default class Emails{
         })
 
         const receivedMailsbyUser= filtered.filteredArray(allReceivedMails,"receiverId",user.id)
-        //console.log(receivedMailsbyUser)
         res.send({
             status: 200,
             data:receivedMailsbyUser    
         });
+
     }
     static unreadMail(req,res){
         const allUnreadMails=filtered.filteredArray(allmails,"status","unread");
@@ -60,7 +86,16 @@ export default class Emails{
         });
     }
     static emailById(req,res){
-        const email=allmails.find(item=>item.id===parseInt(req.params.id));
+        const allReceivedMails=filtered.filteredArray(allmails,"status","received");
+        const user = allusers.find(item=>item.id===parseInt(req.params.id));
+        if(!user) return res.send({
+            status: 404,
+            message:'User with the given id does not exist'
+        })
+
+        const receivedMailsbyUser= filtered.filteredArray(allReceivedMails,"receiverId",user.id)
+
+        const email=receivedMailsbyUser.find(item=>item.id===parseInt(req.params.id));
         if(!email) return res.send({
             status: 404,
             message:'Email with the given id does not exist'
@@ -72,7 +107,7 @@ export default class Emails{
         })
     }
 
-     static deleteEmail(req,res){
+    static deleteEmail(req,res){
         const email= allmails.find(item=>item.id=== parseInt(req.params.id));
         if(!email) return res.send({
             status: 404,
@@ -90,4 +125,5 @@ export default class Emails{
         })
 
     }
+    
 }

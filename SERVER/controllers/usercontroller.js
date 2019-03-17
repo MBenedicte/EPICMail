@@ -80,14 +80,11 @@ export default class User{
             message:"Invalid username or password"
         })
         const validPassword= await  bcrypt.compare(req.body.password, user.password);
-        if(!validPassword) return res.status(400).send({
+     
+        if(!validPassword) return res.send({
             status: 400,
             message:"Invalid username or password"
         })
-        user={
-            username: req.body.username,
-            password: req.body.password
-        }
 
         const token= jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
         res.status(200).send({
@@ -98,6 +95,5 @@ export default class User{
             }]
         })
     }
-
 }
 
