@@ -55,6 +55,7 @@ export default class Validate{
                 return errors;
               }),
             username:Joi.string().min(5).max(10).required().trim().error(errors => {
+              
                 errors.forEach(err => {
                   switch (err.type) {
                     case "any.empty":
@@ -144,73 +145,39 @@ export default class Validate{
           return Joi.validate(user,schema)
         
     }
-    // static validateMail(mail) {
+
+  static validateEmail(email){
+  //     const schema = {
+  //       // receiver_Id:Joi.required().error(errors => {
+  //       //       errors.forEach(err => {
+  //       //         switch (err.type) {
+  //       //           case "any.empty":
+  //       //             err.message = `Receiver should not be empty!`;
+  //       //             break;
+  //       //           default:
+  //       //             break;
+  //       //         }
+  //       //       });
+  //       //       return errors;
+  //       //     }),
+  //         message:Joi.string().required().error(errors => {
+  //             errors.forEach(err => {
+  //               switch (err.type) {
+  //                 case `any.empty`:
+  //                   err.message = `Email should not be empty!`;
+  //                   break;
+  //                 default:
+  //                   break;
+  //               }
+  //             });
+  //             return errors;
+  //           }),
+  //       };
+  
+  //       return Joi.validate(email,schema)
       
-    //  const schema = {
-    //     senderId:Joi.number().required().error(errors => {
-    //         errors.forEach(err => {
-    //           switch (err.type) {
-    //             case "any.empty":
-    //               err.message = `User should not be empty!`;
-    //               break;
-    //             case "string.number":
-    //               err.message = `senderId`
-    //               break;
-    //             case "string.min":
-    //               err.message = `User should have at least ${err.context.limit} characters!`;
-    //               break;
-    //             case "string.max":
-    //               err.message = `User should have at most ${err.context.limit} characters!`;
-    //               break;
-    //             case "string.trim":
-    //               err.message = `You must enter only one username`;
-    //               break;
-    //             default:
-    //               break;
-    //           }
-    //         });
-    //         return errors;
-    //       }),
-    //       receiverId:Joi.number().required().error(errors => {
-    //         errors.forEach(err => {
-    //           switch (err.type) {
-    //             case "any.empty":
-    //               err.message = `User should not be empty!`;
-    //               break;
-    //             case "string.min":
-    //               err.message = `User should have at least ${err.context.limit} characters!`;
-    //               break;
-    //             case "string.string":
-    //               err.message = `User should have at least ${err.context.limit} characters!`;
-    //               break;  
-    //             case "string.max":
-    //               err.message = `User should have at most ${err.context.limit} characters!`;
-    //               break;
-    //             case "string.trim":
-    //               err.message = `You must enter only one username`;
-    //               break;
-    //             default:
-    //               break;
-    //           }
-    //         });
-    //         return errors;
-    //       }),
-    //     message:Joi.string().min(8).required().error(errors => {
-    //         errors.forEach(err => {
-    //           switch (err.type) {
-    //             case "any.empty":
-    //               err.message = `Password should not be empty!`;
-    //               break;
-    //             case "string.min":
-    //               err.message = `Password should have at least ${err.context.limit} characters!`;
-    //               break;
-    //             default:
-    //               break;
-    //           }
-    //         });
-    //         return errors;
-    //       }),
-    //   };
-    //   return Joi.validate(mail, schema);
-    // }
-}
+  }
+     
+  }
+
+    

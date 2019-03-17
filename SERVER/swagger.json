@@ -1,0 +1,387 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Project: EPICMAIL",
+      "description": "EPICMAIL API Documentation",
+      
+      "contact": {
+        "Author": "Benedicte Musabimana"
+      }
+    },
+    "host": "https://epicmail-vi.herokuapp.com/",
+    "basePath": "/",
+   "schemes": [
+    "https",
+    "http"
+    ],
+    "paths": {
+       "/api/v1/users": {
+       "get": {
+          "tags": [
+             "Users"
+          ], 
+          "summary": "Get a list of all users",
+          "produces": [
+            "application/json"
+          ],       
+          "responses": {
+             "201": {
+               "description": "Get list of users"
+             },
+             "404": {
+               "description": "User not found"
+             }
+             
+           }
+          }
+       },
+       "/api/v1/auth/signup": {
+       "post": {
+          "tags": [
+             "Users"
+          ], 
+          "summary": "Sign up new user",
+          "description": "",
+          "produces": [
+            "application/json"
+          ],  
+          "consumes": [
+            "application/json"
+          ],
+          
+          "responses": {
+             "200": {
+               "description": "User created successfully"
+             },
+             "400": {
+               "description": "Invalid information supplied"
+             },
+             "409": {
+               "description": "User already exists"
+             },
+             "default": {
+               "description": "Something went wrong"
+             }
+           }
+          }
+       },
+       "/api/v1/auth/login": {
+       "post": {
+          "tags": [
+             "Users"
+          ], 
+          "summary": "Login a user",
+          "description": "",
+          "produces": [
+            "application/json"
+          ],  
+          "consumes": [
+            "application/json"
+          ],
+          "parameters": [
+           {
+             "in": "body",
+             "name": "body",
+             "description": "Login a user",
+             "required": true,
+             "schema": {
+               "$ref": "#/definitions/login"
+             }
+            }          
+          ],     
+          "responses": {
+             "201": {
+               "description": "User logged in successfully"
+             },
+             "400": {
+               "description": "Invalid Username or password"
+             },
+             "default": {
+               "description": "Something went wrong"
+             }
+           }
+          }
+       },
+      
+       "/api/v1/messages": {
+       "get": {
+          "tags": [
+             "Messages"
+          ], 
+          "summary": "Get all received messages",
+          "produces": [
+            "application/json"
+          ],       
+          "responses": {
+             "200": {
+               "description": "Received emails retreived successfully"
+             },
+             "404": {
+               "description": "No email found"
+             },
+             "default": {
+               "description": "Sorry, error occured"
+             }
+           }
+          },
+       "post": {
+         "tags": [
+             "Messages"
+         ], 
+         "summary": "Send mail",
+         "description": "",
+         "produces": [
+           "application/json"
+         ],  
+         "consumes": [
+           "application/json"
+         ],
+         "parameters": [
+           {
+             "in": "body",
+             "name": "body",
+             "description": "Send mail",
+             "required": true,
+             "schema": {
+               "$ref": "#/definitions/composeEmail"
+             }
+           }          
+         ],     
+         "responses": {
+             "201": {
+               "description": "Email sent successfully"
+             },
+             "204": {
+               "description": "No content provided"
+             },
+             "400": {
+               "description": "Invalid information supplied"
+             },
+             "default": {
+               "description": "Sorry, error occured"
+             }
+           }
+         }
+       },
+       "/api/v1/messages/unread/{id}": {
+       "get": {
+          "tags": [
+             "Messages"
+          ], 
+          "summary": "Get all unread emails for a user",
+          "description": "This endpoints fetch all unread emails for a specific user. It looks for every email that has 'sent' as status",
+          "produces": [
+            "application/json"
+          ],       
+          "responses": {
+             "200": {
+               "description": "Fetch unread emails"
+             },
+             "404": {
+               "description": "User with such id does not exist"
+
+             },
+             
+             "default": {
+               "description": "Sorry, error occured"
+             }
+           }
+          }
+       },
+       "/api/v1/messages/received/{id}": {
+       "get": {
+          "tags": [
+             "Messages"
+          ], 
+          "summary": "Get all received emails for a user",
+          "description": "This endpoints fetch all received emails. It looks for every email that has 'received' as status",
+          "produces": [
+            "application/json"
+          ],       
+          "responses": {
+             "200": {
+               "description": "Fetch received emails"
+             },
+             "400": {
+               "description": "No email found"
+             },
+             "default": {
+               "description": "Sorry, error occured"
+             }
+           }
+          }
+       },
+       "/api/v1/messages/sent/{id}": {
+       "get": {
+          "tags": [
+             "Messages"
+          ], 
+          "summary": "Get all sent emails",
+          "description": "This endpoints fetch all sent emails of a user. It looks for every email that has not 'sent' as status",
+          "produces": [
+            "application/json"
+          ],       
+          "responses": {
+             "200": {
+               "description": "Fetch sent emails"
+             },
+             "400": {
+               "description": "No email found"
+             },
+             "default": {
+               "description": "Sorry, error occured"
+             }
+           }
+          }
+       },   
+       "/api/v1/messages/{id}": {
+         "delete": {
+            "tags": [
+               "Messages"
+            ], 
+            "summary": "Delete a specific mail",
+            "description": "",
+            "produces": [
+              "application/json"
+            ],  
+            "consumes": [
+              "application/json"
+            ],
+            "parameters": [
+             {
+               "in": "path",
+               "name": "id",
+               "description": "",
+               "required": true,
+               "schema": {
+                 "$ref": "#/definitions/deteleEmail"
+               }
+              }          
+            ],     
+            "responses": {
+               "200": {
+                 "description": "Email has been deleted successfully"
+               },
+               "400": {
+                 "description": "The email you are trying to delete doesn't exist"
+               },
+               "default": {
+                 "description": "Sorry, error occured"
+               }
+             }
+            },
+            "/api/v1/messages/{id}": {
+         "get": {
+            "tags": [
+               "Messages"
+            ], 
+            "summary": "View a specific mail",
+            "description": "",
+            "produces": [
+              "application/json"
+            ],  
+            "parameters": [
+             {
+               "in": "path",
+               "name": "id",
+               "description": "",
+               "required": true,
+               "schema": {
+                 "$ref": "#/definitions/detailEmail"
+               }
+              }          
+            ],     
+            "responses": {
+               "200": {
+                 "description": "Message have be retrieved successfully"
+               },
+               "409": {
+                 "description": "The email you are trying to view doesn't exist"
+               },
+               "default": {
+                 "description": "Error occured while processing your request"
+               }
+             }
+            }       
+    },
+    
+   "externalDocs": {
+     "description": "Find out more about Swagger",
+     "url": "http://swagger.io"
+   },
+   "definitions": {
+     "signup": {
+       "type": "object",
+       "properties": {
+         "firstName": {
+           "type": "string"
+         },
+         "lastName": {
+           "type": "string"
+         },
+         "password": {
+           "type": "string"
+         },
+         "username": {
+           "type": "string"
+         }
+       }
+     },
+     "login": {
+       "type": "object",
+       "properties": {
+         "password": {
+           "type": "string"
+         },
+         "mail": {
+           "type": "string"
+         }
+       }
+     },
+     "deteleEmail": {
+       "type": "object",
+       "properties": {
+         "id": {
+           "type": "integer"
+         }
+       }
+     },
+     "detailEmail": {
+       "type": "object",
+       "properties": {
+         "id": {
+           "type": "integer"
+         }
+       }
+     },
+     "createEmail": {
+       "type": "object",
+       "properties": {
+         "subject": {
+           "type": "string"
+         },
+         "message": {
+           "type": "string"
+         },
+         "parentMessageId": {
+           "type": "integer"
+         },
+         "status": {
+           "type": "string",          
+           "default": "sent"
+         },
+         "senderId": {
+           "type": "integer",
+           "default": 1
+         },
+         "receiverId": {
+           "type": "integer",
+           "default": 1
+         }
+        }
+    }
+
+}
+       
+}

@@ -3,6 +3,13 @@ import allRoutes from './routes';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
+// import swaggerUi from 'swagger-ui-express';
+// import swaggerDocument from './swagger.json';
+
+// const swaggerRouter = Router();
+// swaggerRouter.use('/swagger', swaggerUi.serve);
+// swaggerRouter.get('/swagger', swaggerUi.setup(swaggerDocument));
+
 dotenv.config();
 
 if (!process.env.JWTPRIVATEKEY){
@@ -20,7 +27,9 @@ app.use(bodyParser.json());
 
 app.use('/api/v1/', allRoutes);
 
-const port= process.env.PORT || 5000;
+const port=process.env.PORT||3030;
+
+
 const server=app.listen(port, ()=>console.log(`The server is listening on port ${port}`));
 
 module.exports = server
