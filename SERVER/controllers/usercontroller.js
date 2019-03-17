@@ -50,7 +50,6 @@ export default class User{
         const token = jwt.sign({id: user.id},process.env.JWTPRIVATEKEY)
 
         users.push(user);
-
         return res.status(201).send({
             status: 201,
             message:"User registered successfully",
@@ -64,11 +63,11 @@ export default class User{
 
         const { error }= validateNewUser.validateLogin(req.body)
         if( error ){
-            res.status(400).send({
-              status: 400,
+            return res.status(404).send({
+              status: 404,
               message: error.details[0].message
             })
-           return;
+           
         }
 
         let user= users.find(item=>item.username === req.body.username);
@@ -80,7 +79,7 @@ export default class User{
         const validPassword= await  bcrypt.compare(req.body.password, user.password);
      
         if(!validPassword) return res.status(404).send({
-            status: 400,
+            status: 404,
             message:"Invalid username or password"
         })
 

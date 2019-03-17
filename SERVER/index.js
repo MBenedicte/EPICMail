@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 app.use('/api/v1/', allRoutes);
 
-const port=process.env.PORT||3000;
+const port=process.env.PORT||3030;
 const server=app.listen(port, ()=>console.log(`The server is listening on port ${port}`));
 
 module.exports = server

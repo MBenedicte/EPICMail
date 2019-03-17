@@ -9,6 +9,7 @@ export default class Emails{
     static allmails(req,res){
         res.status(200).send({
             status: 200,
+            message:'All mails fetched successfully',
             data:allmails    
         });
     }
@@ -24,19 +25,19 @@ export default class Emails{
         //     })
         // }
         // check whether receiver, if not, return error
-        const isReceiverValid = userList.some( user => req.body.receiverId === user.id );
+        // const isReceiverValid = userList.find( user => req.body.receiverId === user.id );
 
-        if(!isReceiverValid) {
-            return res.status(400).send({
-                status: 400,
-                message: "Unknown receiver"
-              })
-        }
+        // if(!isReceiverValid) {
+        //     return res.status(400).send({
+        //         status: 400,
+        //         message: "Unknown receiver"
+        //       })
+        // }
         // send message. 
         const newMail = {
             id: allmails.length,
             senderId: req.body.senderId,
-            receiverId: req.body.receiverId,
+            receiver_Id: req.body.receiverId,
             subject: req.body.subject,
             message: req.body.message,
             createOn: new Date().toLocaleDateString(),
@@ -109,6 +110,7 @@ export default class Emails{
 
         res.status(200).send({
             status:200,
+            message: "Mail fetched successfully",
             data: email
         })
     }

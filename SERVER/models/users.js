@@ -1,15 +1,6 @@
-export const users = [{
-    id:1,
-    createOn:"02/12/2019",
-    subject:"test 1 submission",
-    message:"Challenge 1 submission",
-    senderId: 1,
-    receiverId:2,
-    parentMessageId:2,
-    status: "unread"
-}];
 
-export const userList = [
+
+ const users = [
     {
         id: 1,
         firstname: "user",
@@ -27,5 +18,5 @@ export const userList = [
         password: "mypassword"
     }
 ];
-// export default users;
+export default users;
 

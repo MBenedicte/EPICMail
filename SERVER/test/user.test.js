@@ -1,7 +1,9 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import server from '../index';
-import users from '../controllers/usercontroller'
+import users from '../models/users'
+//import validateNewUser from '../Helper/validation'
+
 
 // import User from '../controllers/usercontroller';
 
@@ -14,6 +16,7 @@ chai.use(chaiHttp);
                   chai
                   .request(server)
                   .get('/api/v1/users')
+                  .send(users)
                   .end((err, res) => {
                   should.not.exist(err);
                   res.should.have.status(200);
@@ -27,107 +30,12 @@ chai.use(chaiHttp);
             });
       });
 
-      describe("/Post Register a new user", () => {
-        it("it should GET all users", done => {
-              chai
-              .request(server)
-              .get('/api/v1/users')
-              .send({
-                status: 200,
-                message:"Users fetched successfully",
-                data:{
-                  users
-                }
-              })
-              .end((err, res) => {
-              should.not.exist(err);
-              res.should.have.status(200);
-              res.body.should.be.a("object");
-              expect(res.body.data).to.be.a("object");
-              expect(res.body).to.have.haveOwnProperty("data");
-              expect(res.body).to.have.haveOwnProperty("message");
-              expect(res.body.message).eql("Users fetched successfully");
-              done();
-              });
-        });
-  });
 
-  describe('/POST register a new user', () => {
-    const user = {
-       "firstname": "Benedicte",
-       "lastname": "musabimana",
-       "email": "benemusa@gmail.com",
-       "username": "benemusa",
-       "password":"asuygdafs", 
-    }
-    it("it should check if the user ulready exist", done => {
-        chai
-        .request(server)
-        .post('/api/v1/auth/signup')
-        .send({
-            status: 400,
-            message:"User already exists"
-        })
-        .end((err, res) => {
-        should.not.exist(err);
-        res.should.have.status(400);
-        done();
-        });
-  });
-    it("it should register a new user", done => {
-          chai
-          .request(server)
-          .post('/api/v1/auth/signup')
-          .send({
-            status: 400,
-            message:"User registered successfully",
-            data:[{
-                user
-            }]
-          })
-          .end((err, res) => {
-          should.not.exist(err);
-          res.should.have.status(400);
-          res.body.should.be.a("object");
-          //expect(res.body).to.have.haveOwnProperty("data");
-          done();
-          });
-    });
-
- })
-
- describe('/POST login a user', () => {
-    const user = {
-       "username": "benemusa",
-       "password":"asuygdafs", 
-    }
-   
-    it("it allow a user to login", done => {
-          chai
-          .request(server)
-          .post('/api/v1/auth/login')
-          .send({
-            status: 400,
-            message:"User registered successfully",
-            data:[{
-                user
-            }]
-          })
-          .end((err, res) => {
-          should.not.exist(err);
-          res.should.have.status(400);
-          res.body.should.be.a("object");
-          //expect(res.body).to.have.haveOwnProperty("data");
-          done();
-          });
-    });
-
- })
 
 describe('Sign up',()=>{
- 
-  //1. Do validation 
-  it('Should return an error for invalid user data',()=>{
+
+      //1. Do validation 
+      it('Should return an error for invalid user data',(done)=>{
     const user={
       firstname:"",
       lastname: "",
@@ -144,51 +52,168 @@ describe('Sign up',()=>{
           res.body.should.be.a('object')
           res.body.should.haveOwnProperty("message")
           res.body.should.haveOwnProperty("status"); 
-          expect(res.body.message.firstname).to.eql("Firstname should not be empty!")
-          expect(res.body.message.lastname).to.eql("Firstname should not be empty!")
-          expect(res.body.message.username).to.eql("Firstname should not be empty!")
-          expect(res.body.message.email).to.eql("Firstname should not be empty!")
+         
         })
-  })
+        done();
+      })
 
   //2. return user exits
-  it("should throw user exists", () => {
-    const user={
-      username:"sjhdfs",
-      password:""
-    }
-      chai.request(server)
-          .post('api/v1/auth/signup')
-          .send(user)
-          .end((err,res)=>{
-            // should.exist(err)
-            should.have.status(400)
-            res.body.should.be.a('object')
-            res.body.should.haveOwnProperty("message")
-            res.body.should.haveOwnProperty("status")
-            expect(res.body.message).to.eql("User already exists")
-            
-          })
-  })
-  //3. return valid user's input
-  it("should create new user ", () => {
-    const user ={
-      username:"Benedicte",
-      password:"ude646re"
-    };
+  it("Should return user already exist",done=>{
 
-    chai.request(server)
-        .post('api/v1/auth/signup')
+    const user={
+      firstname:"ssdae",
+      lastname: "sasda",
+      username: "userone",
+      email: "userone@email.com",
+      password: "mypassword"
+    };
+    
+      chai.request(server)
+        .post('/api/v1/auth/signup')
         .send(user)
         .end((err,res)=>{
-          // should.not.exist(err)
-          should.have.status(200)
-          res.body.should.be.a('object')
-          res.body.should.haveOwnProperty("data")
-          res.body.should.haveOwnProperty("message")
-          res.body.should.haveOwnProperty("status")
-          expect(res.body.data[0].username).to.be.a("string");
-          expect(res.body.data[0].password).to.be.a("string");
+          res.should.have.status(400)
+          res.body.should.have.property('status')
+          res.body.should.have.property('message')
+          expect(res.body).to.be.a('object')
+          expect(res.body.status).equal(400)
+          expect(res.body.message).equal('User already exists')
         })
+    done();
   })
+//push the new user
+it('It should push the new user',done=>{
+  const user={
+    firstname:"benesas",
+    lastname: "musabiman",
+    username: "benemusa",
+    email: "gename@nwe",
+    password:"dsadfsdsdd"
+  };
+  chai.request(server)
+      .post('/api/v1/auth/signup')
+      // .push(user)
+      .end((err,res)=>{
+        res.should.have.status('400')
+      })
+  done();
+})
+
+
+  //3. create a new user
+  it('It should create the user',done=>{
+    const user={
+      firstname:"benesas",
+      lastname: "musabiman",
+      username: "benemusa",
+      email: "gename@nwe",
+      password:"dsadfsdsdd"
+    };
+    chai.request(server)
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .end((err,res)=>{
+          res.should.have.status('201')
+          res.body.should.have.property('status')
+          res.body.should.have.property('message')
+          res.body.should.have.property('data')
+          expect(res.body.message).equal('User registered successfully')
+          expect(res.body.status).equal(201)
+        })
+    done();
+  })
+ })
+
+describe('/Post User login',()=>{
+  //1 . Validation
+  it('It should return invalid user input',done=>{
+    const user={
+      username: "",
+      password:""
+    };
+    
+
+    chai.request(server)
+    .post('/api/v1/auth/login')
+    .send(user)
+    .end((err,res)=>{
+      res.should.have.status(404);
+      res.body.should.be.a('object')
+      res.body.should.haveOwnProperty("message")
+      res.body.should.haveOwnProperty("status"); 
+      expect(res.body.message).equal("User should not be empty!")
+     
+    })
+    done();
+  })
+
+  //invalid username
+  it('It should return invalid password if the password does not match',done=>{
+
+    const user={
+      username: "usereere",
+      password:"dsadfsdsdd"
+    }
+
+      chai.request(server)
+          .post('/api/v1/auth/login')
+          .send(user)
+          .end((err,res)=>{
+            res.should.have.status(404)
+            res.body.should.be.a('object')
+            res.body.should.have.property('status')
+            res.body.should.have.property('message')
+            expect(res.body).to.be.a('object')
+            expect(res.body.message).equal('Invalid username or password')
+          })
+
+          done();
+  })
+
+  //invalid password
+
+  it('It should return invalid password if the password does not match',done=>{
+
+    const user={
+      username: "userone",
+      password:"dsadfsdsdd"
+    }
+
+      chai.request(server)
+          .post('/api/v1/auth/login')
+          .send(user)
+          .end((err,res)=>{
+            res.should.have.status(404)
+            res.body.should.be.a('object')
+            res.body.should.have.property('status')
+            res.body.should.have.property('message')
+            expect(res.body).to.be.a('object')
+            expect(res.body.message).eql('Invalid username or password')
+          })
+
+          done();
+  })
+
+
+  
+
+
+   //Invalid password
+
+  it('It should allow the user to login',done=>{
+      const user={
+        username: "userone",
+        password: "mypassword"
+      }
+  
+    chai.request(server)
+        .post('/api/v1/login')
+        .send(user)
+        .end((err,res)=>{
+          res.should.have.status(404);
+        })
+
+    done();
+  })
+  
 })
