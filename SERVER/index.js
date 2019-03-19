@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 //app.use(express.json())
 
 app.use('/api/v1/', allRoutes);
+// app.use('/ap1/v1/, allgroupRoutes');
 
 const port=process.env.PORT||3030;
 

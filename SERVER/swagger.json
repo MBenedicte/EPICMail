@@ -1,387 +1,531 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Project: EPICMAIL",
-      "description": "EPICMAIL API Documentation",
-      
-      "contact": {
-        "Author": "Benedicte Musabimana"
+  "swagger": "2.0",
+  "info": {
+    "description": "This is an API documentation of SendIT project build in NodeJs and Express. The root url of is [https://epicmail-vi.herokuapp.com/](https://epicmail-vi.herokuapp.com/) and the functionining app with UI can be found [EPIC Mail](https://epicmail-vi.herokuapp.com/).",
+    "version": "1.0.0",
+    "title": "EPIC Mail",
+    "termsOfService": "",
+    "contact": {
+      "email": "mbenedicte20@gmail.com"
+    },
+    "license": {
+      "name": "ISC",
+      "url": "https://opensource.org/licenses/ISC"
+    }
+  },
+  "host": "(epicmail-vi.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "EPIC Mail",
+      "description": "A web app that helps people exchange messages/information over the internet.",
+      "externalDocs": {
+        "description": "The source code",
+        "url": "https://github.com/MBenedicte/EPICMail"
+      }
+    }
+  ],
+  "schemes": ["https"],
+  "paths": {
+    "/Mails": {
+      "post": {
+        "tags": ["mails"],
+        "summary": "Add a new mail to the store",
+        "description": "",
+        "operationId": "addParcel",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Post object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definition/mail"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": ["mails"],
+        "summary": "Get all mails",
+        "description": "Get all parcels and this router is only accessed by admin",
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Parcel"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     },
-    "host": "https://epicmail-vi.herokuapp.com/",
-    "basePath": "/",
-   "schemes": [
-    "https",
-    "http"
-    ],
-    "paths": {
-       "/api/v1/users": {
-       "get": {
-          "tags": [
-             "Users"
-          ], 
-          "summary": "Get a list of all users",
-          "produces": [
-            "application/json"
-          ],       
-          "responses": {
-             "201": {
-               "description": "Get list of users"
-             },
-             "404": {
-               "description": "User not found"
-             }
-             
-           }
+    "/messages/{id}": {
+      "get": {
+        "tags": ["messages"],
+        "summary": "Find mail by ID",
+        "description": "Returns a single pet",
+        "operationId": "getPetById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
           }
-       },
-       "/api/v1/auth/signup": {
-       "post": {
-          "tags": [
-             "Users"
-          ], 
-          "summary": "Sign up new user",
-          "description": "",
-          "produces": [
-            "application/json"
-          ],  
-          "consumes": [
-            "application/json"
-          ],
-          
-          "responses": {
-             "200": {
-               "description": "User created successfully"
-             },
-             "400": {
-               "description": "Invalid information supplied"
-             },
-             "409": {
-               "description": "User already exists"
-             },
-             "default": {
-               "description": "Something went wrong"
-             }
-           }
-          }
-       },
-       "/api/v1/auth/login": {
-       "post": {
-          "tags": [
-             "Users"
-          ], 
-          "summary": "Login a user",
-          "description": "",
-          "produces": [
-            "application/json"
-          ],  
-          "consumes": [
-            "application/json"
-          ],
-          "parameters": [
-           {
-             "in": "body",
-             "name": "body",
-             "description": "Login a user",
-             "required": true,
-             "schema": {
-               "$ref": "#/definitions/login"
-             }
-            }          
-          ],     
-          "responses": {
-             "201": {
-               "description": "User logged in successfully"
-             },
-             "400": {
-               "description": "Invalid Username or password"
-             },
-             "default": {
-               "description": "Something went wrong"
-             }
-           }
-          }
-       },
-      
-       "/api/v1/messages": {
-       "get": {
-          "tags": [
-             "Messages"
-          ], 
-          "summary": "Get all received messages",
-          "produces": [
-            "application/json"
-          ],       
-          "responses": {
-             "200": {
-               "description": "Received emails retreived successfully"
-             },
-             "404": {
-               "description": "No email found"
-             },
-             "default": {
-               "description": "Sorry, error occured"
-             }
-           }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Parcel"
+            }
           },
-       "post": {
-         "tags": [
-             "Messages"
-         ], 
-         "summary": "Send mail",
-         "description": "",
-         "produces": [
-           "application/json"
-         ],  
-         "consumes": [
-           "application/json"
-         ],
-         "parameters": [
-           {
-             "in": "body",
-             "name": "body",
-             "description": "Send mail",
-             "required": true,
-             "schema": {
-               "$ref": "#/definitions/composeEmail"
-             }
-           }          
-         ],     
-         "responses": {
-             "201": {
-               "description": "Email sent successfully"
-             },
-             "204": {
-               "description": "No content provided"
-             },
-             "400": {
-               "description": "Invalid information supplied"
-             },
-             "default": {
-               "description": "Sorry, error occured"
-             }
-           }
-         }
-       },
-       "/api/v1/messages/unread/{id}": {
-       "get": {
-          "tags": [
-             "Messages"
-          ], 
-          "summary": "Get all unread emails for a user",
-          "description": "This endpoints fetch all unread emails for a specific user. It looks for every email that has 'sent' as status",
-          "produces": [
-            "application/json"
-          ],       
-          "responses": {
-             "200": {
-               "description": "Fetch unread emails"
-             },
-             "404": {
-               "description": "User with such id does not exist"
-
-             },
-             
-             "default": {
-               "description": "Sorry, error occured"
-             }
-           }
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Pet not found"
           }
-       },
-       "/api/v1/messages/received/{id}": {
-       "get": {
-          "tags": [
-             "Messages"
-          ], 
-          "summary": "Get all received emails for a user",
-          "description": "This endpoints fetch all received emails. It looks for every email that has 'received' as status",
-          "produces": [
-            "application/json"
-          ],       
-          "responses": {
-             "200": {
-               "description": "Fetch received emails"
-             },
-             "400": {
-               "description": "No email found"
-             },
-             "default": {
-               "description": "Sorry, error occured"
-             }
-           }
+        },
+        "security": [
+          {
+            "Bearer": []
           }
-       },
-       "/api/v1/messages/sent/{id}": {
-       "get": {
-          "tags": [
-             "Messages"
-          ], 
-          "summary": "Get all sent emails",
-          "description": "This endpoints fetch all sent emails of a user. It looks for every email that has not 'sent' as status",
-          "produces": [
-            "application/json"
-          ],       
-          "responses": {
-             "200": {
-               "description": "Fetch sent emails"
-             },
-             "400": {
-               "description": "No email found"
-             },
-             "default": {
-               "description": "Sorry, error occured"
-             }
-           }
+        ]
+      },
+      "": {
+        "tags": ["parcels"],
+        "summary": "Update an existing parcel",
+        "description": "Up things like destination and destination address",
+        "operationId": "updateParcel",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Parcel object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Parcel"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
           }
-       },   
-       "/api/v1/messages/{id}": {
-         "delete": {
-            "tags": [
-               "Messages"
-            ], 
-            "summary": "Delete a specific mail",
-            "description": "",
-            "produces": [
-              "application/json"
-            ],  
-            "consumes": [
-              "application/json"
-            ],
-            "parameters": [
-             {
-               "in": "path",
-               "name": "id",
-               "description": "",
-               "required": true,
-               "schema": {
-                 "$ref": "#/definitions/deteleEmail"
-               }
-              }          
-            ],     
-            "responses": {
-               "200": {
-                 "description": "Email has been deleted successfully"
-               },
-               "400": {
-                 "description": "The email you are trying to delete doesn't exist"
-               },
-               "default": {
-                 "description": "Sorry, error occured"
-               }
-             }
-            },
-            "/api/v1/messages/{id}": {
-         "get": {
-            "tags": [
-               "Messages"
-            ], 
-            "summary": "View a specific mail",
-            "description": "",
-            "produces": [
-              "application/json"
-            ],  
-            "parameters": [
-             {
-               "in": "path",
-               "name": "id",
-               "description": "",
-               "required": true,
-               "schema": {
-                 "$ref": "#/definitions/detailEmail"
-               }
-              }          
-            ],     
-            "responses": {
-               "200": {
-                 "description": "Message have be retrieved successfully"
-               },
-               "409": {
-                 "description": "The email you are trying to view doesn't exist"
-               },
-               "default": {
-                 "description": "Error occured while processing your request"
-               }
-             }
-            }       
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid Id"
+          },
+          "404": {
+            "description": "Parcel not found"
+          },
+          "405": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
     },
-    
-   "externalDocs": {
-     "description": "Find out more about Swagger",
-     "url": "http://swagger.io"
-   },
-   "definitions": {
-     "signup": {
-       "type": "object",
-       "properties": {
-         "firstName": {
-           "type": "string"
-         },
-         "lastName": {
-           "type": "string"
-         },
-         "password": {
-           "type": "string"
-         },
-         "username": {
-           "type": "string"
-         }
-       }
-     },
-     "login": {
-       "type": "object",
-       "properties": {
-         "password": {
-           "type": "string"
-         },
-         "mail": {
-           "type": "string"
-         }
-       }
-     },
-     "deteleEmail": {
-       "type": "object",
-       "properties": {
-         "id": {
-           "type": "integer"
-         }
-       }
-     },
-     "detailEmail": {
-       "type": "object",
-       "properties": {
-         "id": {
-           "type": "integer"
-         }
-       }
-     },
-     "createEmail": {
-       "type": "object",
-       "properties": {
-         "subject": {
-           "type": "string"
-         },
-         "message": {
-           "type": "string"
-         },
-         "parentMessageId": {
-           "type": "integer"
-         },
-         "status": {
-           "type": "string",          
-           "default": "sent"
-         },
-         "senderId": {
-           "type": "integer",
-           "default": 1
-         },
-         "receiverId": {
-           "type": "integer",
-           "default": 1
-         }
+    "/parcel/{parcelId}/destination": {
+      "put": {
+        "tags": ["parcels"],
+        "summary": "uploads an image",
+        "description": "",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of pet to update",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "destination",
+            "in": "formData",
+            "description": "Additional data to pass to server",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "destination_address",
+            "in": "formData",
+            "description": "Additional data to pass to server",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/Parcel"
+            }
+          },
+          "400": {
+            "description": "Status should one of pending, in_transit or delivered"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/parcel/{parcelId}/presentLocation": {
+      "put": {
+        "tags": ["parcels"],
+        "summary": "uploads an image",
+        "description": "",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of pet to update",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "presentLocation",
+            "in": "formData",
+            "description": "Additional data to pass to server",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/Parcel"
+            }
+          },
+          "400": {
+            "description": "Status should one of pending, in_transit or delivered"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/parcels/{parcelId}/status": {
+      "put": {
+        "tags": ["parcels"],
+        "summary": "uploads an image",
+        "description": "",
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of pet to update",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "status",
+            "in": "formData",
+            "description": "Additional data to pass to server",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/Parcel"
+            }
+          },
+          "400": {
+            "description": "Status should one of pending, in_transit or delivered"
+          },
+          "security": [
+            {
+              "Bearer": []
+            }
+          ]
         }
+      }
+    },
+    "/parcels/{parcelId}/cancel": {
+      "put": {
+        "tags": ["parcels"],
+        "summary": "Cancel parcel by id",
+        "description": "Cancel parcel with a specific id",
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "name": "parcelId",
+            "in": "path",
+            "description": "ID of pet that needs to be fetched",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Parcel"
+            }
+          },
+          "400": {
+            "description": "Invalid parcelId"
+          },
+          "404": {
+            "description": "Parcel not found"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Create user",
+        "description": "This not authenticated",
+        "operationId": "createUser",
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/parcels": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Get all parcels by user id",
+        "description": "Get all parcels that have been created by a particular user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user's parcel need to be fetched",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Parcel"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/current": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Fet the current user",
+        "description": "",
+        "produces": ["application/xml", "application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
     }
-
-}
-       
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "Abayo"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Jean"
+        },
+        "email": {
+          "type": "string",
+          "example": "luc.abayo@andela.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password"
+        },
+        "phone": {
+          "type": "string",
+          "example": " 07892117275"
+        },
+        "isAdmin": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "Parcel": {
+      "type": "object",
+      "required": ["pickup_location", "destination", "details"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "pickup_location": {
+          "type": "string",
+          "example": "Kigali"
+        },
+        "pickup_address": {
+          "type": "string",
+          "example": "KG 11 Av"
+        },
+        "destination": {
+          "type": "string",
+          "example": "Muhanga"
+        },
+        "details": {
+          "type": "object",
+          "example": "{ 'width': 23, 'height': 34, 'length': 45, 'quantity': 45, }"
+        },
+        "status": {
+          "type": "string",
+          "description": "parcel's status during the process",
+          "enum": ["in_transit", "pending", "delivered", "canceled"]
+        }
+      },
+      "xml": {
+        "name": "Parcel"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
 }
