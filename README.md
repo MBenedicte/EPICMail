@@ -22,12 +22,11 @@ A web app that helps people exchange messages/information over the internet.
 
 # 2 . Built with
 
- Front-end: 
-HTML, CSS
+ Front-end: HTML, CSS
 
-..* Back-end: Nodejs, express
+Back-end: Nodejs, express
 
-..*Database: 
+Database: Postgres
 
 
 
@@ -71,9 +70,18 @@ Get: /api/v1/users
 [https://github.com/MBenedicte/EPICMail](https://github.com/MBenedicte/EPICMail)
 
 
-# 5 . Run the server using the command: 
+# 5 . Commnands to run:
 
-npm run server
+# server:
+
+npm run dev 
+
+# test: 
+npm run test
+
+# database: 
+
+npm run database
 
 # 6 . Author:
 

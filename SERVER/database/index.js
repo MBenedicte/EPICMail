@@ -11,9 +11,25 @@ const client = new Client({
 
 });
 
-client.connect()
+execute();
 
-.then(()=> console.log('Connected successfully'))
-.catch(err=>console.log(`something went wrong here is the error ${err}`))
+async function execute(){
+  try{
+      await client.connect();
+      console.log(`connected successfully`);
+      const { rows } = await client.query(" select * from users");
+      console.log(rows)
+  }
+  catch(error){
+    console.log(`something wrong happened`)
+  }
+}
+
+// client.connect()
+
+// .then(()=> console.log('Connected successfully'))
+// .then(async()=> await client.query('select * from users'))
+// .then(result=> console.table(result.rows))
+// .catch(err=>console.log(`something went wrong here is the error ${err}`))
 
 
