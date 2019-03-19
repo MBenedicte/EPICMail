@@ -13,3 +13,7 @@ const client = new Client({
 
 client.connect()
 
+.then(()=> console.log('Connected successfully'))
+.catch(err=>console.log(`something went wrong here is the error ${err}`))
+
+
