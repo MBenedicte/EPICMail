@@ -1,7 +1,8 @@
 import users from '../models/users';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import validateNewUser from '../Helper/validation'
+import Validator from '../Helper/validation';
+import UserService from '../database/User';
 
 
 
@@ -16,7 +17,7 @@ export default class User{
         });
     }
 
-    static async userSignup(req,res){
+    static async oldUserSignup(req,res){
         const { error } = validateNewUser.validateReistration(req.body)
         if( error ){
             return res.status(400).send({
@@ -91,6 +92,45 @@ export default class User{
                 'token':token
             }]
         })
+    }
+    static async userSignup(req, res) {
+        try {
+            //valid req
+            const isInvalid = Validator.createUser(req.body);
+            if(isInvalid) {
+                return res.status(400).send({
+                    status: 400,
+                    message: isInvalid
+                });
+            }
+            // check if user exists
+            const existingUser = await UserService.readOne(`username = $1 and email = $2`, [req.body.username, req.body.email]);
+            
+            if(existingUser && existingUser.id) {
+                return res.status(400).send({
+                    status: 400,
+                    message: "User already existed"
+                });
+            }
+            
+            // encrypt password
+            req.body.password = bcrypt.hashSync(req.body.password, 10);
+            //create new user
+            const createdUser  = await UserService.create(req.body);
+            
+            return res.status(201).send({
+                status: 201,
+                data: createdUser
+            })
+
+        } catch (error) {
+            //consolidate all error into this exiting point
+            return res.status(400).send({
+                status: 400,
+                message: error
+            })   
+        }
+        
     }
 }
 

@@ -12,11 +12,35 @@ const pool = new pg.Pool({
 });
 
 
-pool.on('connect',()=>{
-  console.log(`connected successfully`);
+pool.on('error',(err,client)=>{
+  console.error('Unexpected error on the client', err);
+  client.release(err);
+  client.end();
+  process.exit(-1)
 })
       
-  
-  export default pool;
+module.exports={
+  query: async(text,params)=>{
+    console.log('connected successfully')
+    return pool.connect()
+    .then(async (client)=>{
+      return client.query(text,params)
+      .then( res=>{
+        console.log('executed query', {text,params,rows: res.rowCount})
+        client.end();
+        return res;
+      })
+      .catch(error=>{
+        console.log(error.stack)
+        client.end();
+        throw error.stack
+      })
+    }) 
+    .catch( error=>{
+      throw error;
+    })    
+  }
+}
+
 
 
