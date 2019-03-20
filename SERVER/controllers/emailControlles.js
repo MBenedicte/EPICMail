@@ -15,25 +15,6 @@ export default class Emails{
     }
 
     static sendMail(req, res) {
-        // validate the request
-        // const { error } = validator.validateEmail(req.body);
-
-        // if(error){
-        //     return res.status(400).send({
-        //       status: 400,
-        //       message: error.details[0].message
-        //     })
-        // }
-        // check whether receiver, if not, return error
-        // const isReceiverValid = userList.find( user => req.body.receiverId === user.id );
-
-        // if(!isReceiverValid) {
-        //     return res.status(400).send({
-        //         status: 400,
-        //         message: "Unknown receiver"
-        //       })
-        // }
-        // send message. 
         const newMail = {
             id: allmails.length,
             senderId: req.body.senderId,
