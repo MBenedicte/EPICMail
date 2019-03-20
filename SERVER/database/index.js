@@ -11,12 +11,8 @@ const pool = new pg.Pool({
 
 });
 
-
 pool.on('connect',()=>{
-  console.log(`connected successfully`);
+  console.log('Connected successfully')
 })
-      
-  
-  export default pool;
 
-
+export default pool;

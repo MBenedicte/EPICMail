@@ -6,7 +6,7 @@ export const createTable=()=>{
         id SERIAL NOT NULL UNIQUE,
         firstname VARCHAR(150) NOT NULL,
         lastname VARCHAR(150) NOT NULL,
-        email VARCHAR(150) NOT NULL,
+        email VARCHAR(150) NOT NULL UNIQUE,
         username VARCHAR(150) NOT NULL,
         password VARCHAR(150) NOT NULL
     )`

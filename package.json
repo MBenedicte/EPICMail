@@ -34,7 +34,7 @@
     "coveralls": "npm test  && nyc report --reporter=text-lcov | coveralls",
     "database": "nodemon  --require babel-core/register ./SERVER/database/index.js",
     "create-tables": "node --require babel-core/register ./SERVER/database/createTable.js createTable",
-    "delete-tables": "node --require babel-core/register ./SERVER/database/createTable.js deleteTable"
+    "delete-tables": "node --require babel-core/register ./SERVER/database/createTable.js deletetable"
   },
   "engines": {
     "node": "8.11.4"
