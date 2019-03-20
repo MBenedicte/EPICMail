@@ -1,22 +1,12 @@
 import db from './index'
 
 class UserModel{
-     static async create(user) {
+     static async create() {
         try {
-            const values = Object.values(user);
-            const res = await db.query(`INSERT INTO users(firstname, lastname, username, email, password) VALUES($1, $2, $3, $4, $5) RETURNING *`,values);    
-            return res && res.rows[0];
+            const res= db.query(`INSERT INTO users(firstname, lastname, email, username,password) values ($1, $2, $3, $4, $5) returning *`)
+            return res
         } catch (error) {
             throw error;  
-        }
-    }
-
-    static async readOne(condition, values) {
-        try {
-            const res  = await db.query(`SELECT * FROM users WHERE ${condition}`, values);
-            return res;
-        } catch (error) {
-            throw error;
         }
     }
 }
